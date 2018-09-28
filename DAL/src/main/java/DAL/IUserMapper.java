@@ -1,5 +1,7 @@
 package DAL;
 import Entity.User;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 
@@ -8,28 +10,39 @@ public interface IUserMapper {
     /**
      * 根据学生编号获得学生对象
      */
-    User selectStudentByUid(int uid);
+    User selectUserByUid(int uid);
 
     /**
      * 根据学生姓名获得学生集合
      */
-    List<User> selectStudentsByName(String name);
+    List<User> selectUsersByName(String name);
 
     /**
      * 添加学生
      */
-    int insertStudent(User entity);
+    int insertUser(User entity);
 
     /**
      * 更新学生
      */
-    int updateStudent(User entity);
+    int updateUser(User entity);
 
     /**
      * 删除学生
      */
-    int deleteStudent(int uid);
+    int deleteUser(int uid);
 
     /*获得集合*/
-    List<User> selectAll();
+    List<User> selectAllUsers();
+
+    /*注解写在接口里面*/
+    List<User> selectMohu(@Param("uname")String uname,@Param("usex") int usex);
+
+    List<User> selectTwo(@Param("cid") String cid);
+
+    int selectCount();
+
+    int deleteAll(@Param("list") List<Integer> list);
+
+    List<User> selectAllUsersByPage(@Param("pagelimit") int pagelimit,@Param("size") int size);
 }

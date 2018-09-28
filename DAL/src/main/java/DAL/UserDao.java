@@ -17,32 +17,58 @@ public class UserDao  implements IUserMapper{
     /*初始化一个映射文件*/
     IUserMapper mapper=session.getMapper(IUserMapper.class);
 
-    public User selectStudentByUid(int uid) {
-        return mapper.selectStudentByUid(uid);
+    /*注意，别关闭session.否则报错Executor was closed.*/
+
+    public User selectUserByUid(int uid) {
+        return mapper.selectUserByUid(uid);
     }
 
-    public List<User> selectStudentsByName(String name) {
-        return mapper.selectStudentsByName(name);
+    public List<User> selectUsersByName(String name) {
+        return mapper.selectUsersByName(name);
     }
 
-    /*增删改记得要session.commit(),否则无效*/
-    public int insertStudent(User entity) {
-        System.out.println("beforeuid:"+entity.getUid());
-        mapper.insertStudent(entity);
+    public int insertUser(User entity) {
+        int result=mapper.insertUser(entity);
         session.commit();
-        System.out.println("afteruid:"+entity.getUid());
-        return entity.getUid();
+        return result;
     }
 
-    public int updateStudent(User entity) {
-        return mapper.updateStudent(entity);
+    public int updateUser(User entity) {
+        int result=mapper.updateUser(entity);
+        session.commit();
+        return result;
     }
 
-    public int deleteStudent(int uid) {
-        return mapper.deleteStudent(uid);
+    public int deleteUser(int uid) {
+        int result=mapper.deleteUser(uid);
+        session.commit();
+        return result;
     }
 
-    public List<User> selectAll() {
-        return mapper.selectAll();
+    public List<User> selectAllUsers() {
+        return mapper.selectAllUsers();
+    }
+
+    public List<User> selectMohu(String uname, int usex) {
+        return mapper.selectMohu(uname,usex);
+    }
+
+    public List<User> selectTwo(String cid) {
+        return mapper.selectTwo(cid);
+    }
+
+    public int selectCount() {
+        return mapper.selectCount();
+    }
+
+    public int deleteAll(List<Integer>items) {
+        int result= mapper.deleteAll(items);
+        session.commit();
+        return result;
+    }
+
+    public List<User> selectAllUsersByPage(int pageno, int size) {
+        int pagelimit=(pageno-1)*size;
+        return mapper.selectAllUsersByPage(pagelimit,size);
     }
 }

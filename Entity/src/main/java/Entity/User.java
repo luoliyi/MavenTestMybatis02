@@ -6,6 +6,24 @@ public class User {
     private int uage;
     private int usex;
     private String udesc;
+    private int cid;
+    private Classes classes;
+
+    public Classes getClasses() {
+        return classes;
+    }
+
+    public void setClasses(Classes classes) {
+        this.classes = classes;
+    }
+
+    public int getCid() {
+        return cid;
+    }
+
+    public void setCid(int cid) {
+        this.cid = cid;
+    }
 
     public User(){}
     public User(String uname, int uage, int usex, String udesc) {
@@ -22,6 +40,21 @@ public class User {
         this.usex = usex;
         this.udesc = udesc;
     }
+    public User(String uname, int uage, int usex, String udesc,int cid) {
+        this.uname = uname;
+        this.uage = uage;
+        this.usex = usex;
+        this.udesc = udesc;
+        this.cid=cid;
+    }
+    public User(int uid, String uname, int uage, int usex, String udesc,int cid) {
+        this.uid = uid;
+        this.uname = uname;
+        this.uage = uage;
+        this.usex = usex;
+        this.udesc = udesc;
+        this.cid=cid;
+    }
 
     @Override
     public String toString() {
@@ -31,6 +64,8 @@ public class User {
                 ", uage=" + uage +
                 ", usex=" + usex +
                 ", udesc='" + udesc + '\'' +
+                ", cid=" + cid +
+                ",classname="+this.classes.getName()+
                 '}';
     }
 

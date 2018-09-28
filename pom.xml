@@ -11,6 +11,7 @@
     <modules>
         <module>Entity</module>
         <module>DAL</module>
+        <module>Show</module>
     </modules>
 
 

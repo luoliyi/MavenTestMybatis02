@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="DAL" />
         <module name="Entity" />
+        <module name="Show" />
       </profile>
     </annotationProcessing>
   </component>

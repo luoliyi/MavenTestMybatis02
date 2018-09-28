@@ -6,19 +6,81 @@
 <!--这里的namespace 是映射到接口,里面的方法要和下面的方法id一样。-->
 <mapper namespace="DAL.IUserMapper">
     <!--这里做增删改查-->
-    <select id="selectStudentByUid" resultType="User">
+    <select id="selectUserByUid" resultType="User">
         select * from information where uid=#{uid}
     </select>
 
-    <!--集合-->
-    <select id="selectAll" resultType="User">
+    <!--查询全部-->
+    <select id="selectAllUsers" resultType="User">
         select * from information;
     </select>
 
-    <insert id="insertStudent" parameterType="User" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="uid">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="uid">
             SELECT LAST_INSERT_ID() AS uid;
         </selectKey>
         insert into information(uname,uage,usex,udesc) values(#{uname},#{uage},#{usex},#{udesc})
     </insert>
+
+    <!--修改-->
+    <update id="updateUser" parameterType="User" keyProperty="uid" useGeneratedKeys="true">
+<!--    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="uid">
+        SELECT LAST_UPDATE_ID AS uid;
+    </selectKey>-->
+        update information set uname=#{uname},uage=#{uage},usex=#{usex},udesc=#{udesc} where uid=#{uid}
+    </update>
+
+    <!--删除-->
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        delete from information where uid=#{uid}
+    </delete>
+
+    <!--批量删除-->
+    <delete id="deleteAll" parameterType="java.util.List">
+        delete from information
+        <where>
+            <if test="list!=null and list.size() gt 0">
+                uid in
+                <foreach collection="list" open="(" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </delete>
+
+    <!--获得总数-->
+    <select id="selectCount" resultType="java.lang.Integer">
+        select count(*) from information
+    </select>
+
+    <!--分页-->
+    <select id="selectAllUsersByPage" resultType="User">
+        select * from information limit #{pagelimit},#{size}
+    </select>
+
+    <!--模糊查询-->
+    <select id="selectMohu" resultType="User">
+        select * from information where uname like '%${uname}%' or usex=#{usex};
+    </select>
+
+    <!--两表查询-->
+    <select id="selectTwo" resultMap="selectTwoMap" parameterType="java.lang.String">
+        select * from information as i join classes  as c on i.cid=c.cid
+        <if test="cid!=null and cid!=''">
+            and i.cid=#{cid};
+        </if>
+    </select>
+    <resultMap id="selectTwoMap" type="User">
+        <id column="uid" property="uid" />
+        <result column="uname" property="uname" />
+        <result column="uage" property="uage" />
+        <result column="usex" property="usex" />
+        <result column="udesc" property="udesc" />
+        <result column="cid" property="cid"></result>
+        <!--连接-->
+        <association property="classes" javaType="Classes">
+            <id  column="cid" property="cid"></id>
+            <result column="cname" property="cname"></result>
+        </association>
+    </resultMap>
 </mapper>

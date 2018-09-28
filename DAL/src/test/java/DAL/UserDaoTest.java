@@ -16,32 +16,31 @@ public class UserDaoTest {
     }
 
     @Test
-    public void selectStudentById() {
-       User u= udao.selectStudentByUid(3);
+    public void selectUserById() {
+       User u= udao.selectUserByUid(3);
         System.out.println(u.toString());
     }
     @Test
     public void selectAll(){
-        List<User> userList=udao.selectAll();
+        List<User> userList=udao.selectAllUsers();
         for (User u:userList){
             System.out.println(u.toString());
         }
     }
 
     @Test
-    public void selectStudentsByName() {
+    public void selectMohu(){
+        List<User> userList=udao.selectMohu("i",0);
+        for (User u:userList){
+            System.out.println(u.toString());
+        }
     }
 
     @Test
-    public void insertStudent() {
-    }
-
-    @Test
-    public void updateStudent() {
-        udao.insertStudent(new User("luosan",20,0,"my name is luosan!"));
-    }
-
-    @Test
-    public void deleteStudent() {
+    public void selectTwo(){
+        List<User>  users=udao.selectTwo("4");
+        for(User u:users){
+            System.out.println(u.toString());
+        }
     }
 }
