@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--这里的namespace 是映射到接口,里面的方法要和下面的方法id一样。-->
+<mapper namespace="DAL.IUserMapper">
+    <!--这里做增删改查-->
+    <select id="selectStudentByUid" resultType="User">
+        select * from information where uid=#{uid}
+    </select>
+
+    <!--集合-->
+    <select id="selectAll" resultType="User">
+        select * from information;
+    </select>
+
+    <insert id="insertStudent" parameterType="User" useGeneratedKeys="true" keyProperty="uid">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="uid">
+            SELECT LAST_INSERT_ID() AS uid;
+        </selectKey>
+        insert into information(uname,uage,usex,udesc) values(#{uname},#{uage},#{usex},#{udesc})
+    </insert>
+</mapper>
